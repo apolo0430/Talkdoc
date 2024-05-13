@@ -26,13 +26,15 @@ public class PatientInfo implements Parcelable
     }
 
     // Parcelable 구현
-    protected PatientInfo(Parcel in) {
+    protected PatientInfo(Parcel in)
+    {
         name = in.readString();
         number = in.readString();
     }
 
     @Override
-    public void writeToParcel(Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags)
+    {
         dest.writeString(name);
         dest.writeString(number);
     }
@@ -42,14 +44,17 @@ public class PatientInfo implements Parcelable
         return 0;
     }
 
-    public static final Creator<PatientInfo> CREATOR = new Creator<PatientInfo>() {
+    public static final Creator<PatientInfo> CREATOR = new Creator<PatientInfo>()
+    {
         @Override
-        public PatientInfo createFromParcel(Parcel in) {
+        public PatientInfo createFromParcel(Parcel in)
+        {
             return new PatientInfo(in);
         }
 
         @Override
-        public PatientInfo[] newArray(int size) {
+        public PatientInfo[] newArray(int size)
+        {
             return new PatientInfo[size];
         }
     };

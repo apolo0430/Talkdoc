@@ -15,6 +15,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.talkdoc.databinding.ActivityTranslationBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,8 +23,8 @@ public class TranslationActivity extends AppCompatActivity
 {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTranslationBinding binding;
-    //private RecordVoice recordVoice;
-    //private PlayVoice playVoice;
+    private RecordVoice recordVoice;
+    private PlayVoice playVoice;
     private boolean record = false;
 
     @Override
@@ -37,36 +38,39 @@ public class TranslationActivity extends AppCompatActivity
 
         String audioFile = getExternalCacheDir().getAbsolutePath() + "/recorded_audio.3gp";
 
-        /*recordVoice = new RecordVoice(audioFile);
-        playVoice = new PlayVoice(audioFile);*/
+        recordVoice = new RecordVoice(audioFile);
+        playVoice = new PlayVoice(audioFile);
 
         setSupportActionBar(binding.appBarTranslation.toolbar);
-        /*binding.appBarTranslation.fab.setOnClickListener(new View.OnClickListener() {
+        binding.appBarTranslation.fab.setOnClickListener(new View.OnClickListener() {
+            private boolean isRecording = false; // 녹음 중인지 여부를 나타내는 변수
+            FloatingActionButton fab = findViewById(R.id.fab);
+
             @Override
             public void onClick(View view)
             {
+                if (!isRecording) { // 녹음 중이 아닌 경우
+                    Snackbar.make(view, "녹음 시작", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null)
+                            .setAnchorView(fab).show();
 
-                Snackbar.make(view, "녹음 시작", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null)
-                        .setAnchorView(R.id.fab).show();
+                    recordVoice.startRecording();
+                    isRecording = true; // 녹음 중으로 설정
+                    fab.setImageResource(R.drawable.ic_mic_black);
+                }
+                else { // 녹음 중인 경우
+                    Snackbar.make(view, "녹음 종료", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null)
+                            .setAnchorView(fab).show();
 
-                recordVoice.startRecording();
+                    recordVoice.stopRecording();
+                    isRecording = false; // 녹음 중지로 설정
+                    fab.setImageResource(R.drawable.ic_mic_none_black);
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run()
-                    {
-                        recordVoice.stopRecording();
-
-                        Snackbar.make(view, "녹음 종료", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null)
-                                .setAnchorView(R.id.fab).show();
-
-                        playVoice.startPlaying();
-                    }
-                }, 5000); // 5초 후에 녹음 중지 (5000 밀리초)
+                    playVoice.startPlaying();
+                }
             }
-        });*/
+        });
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
