@@ -16,4 +16,10 @@
         android:name="com.example.talkdoc.ui.checkup.CheckupFragment"
         android:label="@string/title_checkup"
         tools:layout="@layout/fragment_checkup" />
+
+    <fragment
+        android:id="@+id/navigation_mypage"
+        android:name="com.example.talkdoc.ui.mypage.MyPageFragment"
+        android:label="@string/title_mypage"
+        tools:layout="@layout/fragment_mypage" />
 </navigation>

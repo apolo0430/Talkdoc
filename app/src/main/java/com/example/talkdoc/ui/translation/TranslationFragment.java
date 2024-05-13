@@ -16,22 +16,22 @@ public class TranslationFragment extends Fragment
 {
     private FragmentTranslationBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        TranslationViewModel recordViewModel =
-                new ViewModelProvider(this).get(TranslationViewModel.class);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        TranslationViewModel translationViewModel = new ViewModelProvider(this).get(TranslationViewModel.class);
 
         binding = FragmentTranslationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textTranslation;
-        recordViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        translationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         return root;
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroyView()
+    {
         super.onDestroyView();
         binding = null;
     }

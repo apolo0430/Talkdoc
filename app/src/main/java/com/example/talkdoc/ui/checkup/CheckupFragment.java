@@ -18,13 +18,13 @@ public class CheckupFragment extends Fragment
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        CheckupViewModel notificationsViewModel = new ViewModelProvider(this).get(CheckupViewModel.class);
+        CheckupViewModel checkupViewModel = new ViewModelProvider(this).get(CheckupViewModel.class);
 
         binding = FragmentCheckupBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textCheckup;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        checkupViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         return root;
     }
