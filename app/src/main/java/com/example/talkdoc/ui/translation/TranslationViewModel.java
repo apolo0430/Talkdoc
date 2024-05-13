@@ -1,21 +1,19 @@
-package com.example.talkdok.ui.checkup;
+package com.example.talkdoc.ui.translation;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class CheckupViewModel extends ViewModel
-{
+public class TranslationViewModel extends ViewModel {
+
     private final MutableLiveData<String> mText;
 
-    public CheckupViewModel()
-    {
+    public TranslationViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is checkup fragment");
+        mText.setValue("This is Record fragment");
     }
 
-    public LiveData<String> getText()
-    {
+    public LiveData<String> getText() {
         return mText;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.talkdok.ui.list;
+package com.example.talkdoc.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +15,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.talkdok.PatientInfo;
-import com.example.talkdok.R;
-import com.example.talkdok.databinding.FragmentListBinding;
+import com.example.talkdoc.PatientInfo;
+import com.example.talkdoc.R;
+import com.example.talkdoc.TranslationActivity;
+import com.example.talkdoc.databinding.FragmentListBinding;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,7 @@ public class ListFragment extends Fragment
 
         listView.setAdapter(listViewAdapter);
 
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
@@ -61,7 +61,7 @@ public class ListFragment extends Fragment
                 intent.putExtra("selectedPatient", selectedPatient);
                 startActivity(intent);
             }
-        });*/
+        });
 
         return root;
     }

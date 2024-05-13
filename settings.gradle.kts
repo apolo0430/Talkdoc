@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Talkdok"
+rootProject.name = "Talkdoc"
 include(":app")
  

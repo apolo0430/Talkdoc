@@ -1,4 +1,4 @@
-package com.example.talkdok;
+package com.example.talkdoc;
 
 import android.content.Context;
 

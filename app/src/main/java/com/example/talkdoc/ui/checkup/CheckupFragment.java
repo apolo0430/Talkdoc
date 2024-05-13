@@ -1,4 +1,4 @@
-package com.example.talkdok.ui.checkup;
+package com.example.talkdoc.ui.checkup;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.talkdok.databinding.FragmentCheckupBinding;
+import com.example.talkdoc.databinding.FragmentCheckupBinding;
 
 public class CheckupFragment extends Fragment
 {

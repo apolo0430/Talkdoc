@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.talkdok"
+    namespace = "com.example.talkdoc"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.talkdok"
+        applicationId = "com.example.talkdoc"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

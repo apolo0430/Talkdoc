@@ -1,4 +1,4 @@
-package com.example.talkdok;
+package com.example.talkdoc;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.talkdok.databinding.ActivityMainBinding;
+import com.example.talkdoc.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity
 {
