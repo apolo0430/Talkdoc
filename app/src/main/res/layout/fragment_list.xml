@@ -15,9 +15,17 @@
         android:scrollbars="none" >
 
         <ListView
+            android:paddingTop="?attr/actionBarSize"
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
         </ListView>
     </ScrollView>
+
+    <include
+        android:id="@+id/custom_toolbar"
+        layout="@layout/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

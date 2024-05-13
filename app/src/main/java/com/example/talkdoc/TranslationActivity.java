@@ -25,10 +25,10 @@ public class TranslationActivity extends AppCompatActivity
     private ActivityTranslationBinding binding;
     private RecordVoice recordVoice;
     private PlayVoice playVoice;
-    private boolean record = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         PatientInfo selectedPatient = getIntent().getParcelableExtra("selectedPatient");
