@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <!-- 이름 입력 필드 -->
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="이름" />
+
+    <!-- 이메일 입력 필드 -->
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="이메일" />
+
+    <!-- 비밀번호 입력 필드 -->
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="비밀번호"
+        android:inputType="textPassword" />
+
+    <!-- 사용자 유형 선택 -->
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioButtonDoctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="의사" />
+
+        <RadioButton
+            android:id="@+id/radioButtonWorker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="근로자" />
+
+        <RadioButton
+            android:id="@+id/radioButtonGuardian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="보호자" />
+    </RadioGroup>
+
+    <!-- 회원가입 버튼 -->
+    <Button
+        android:id="@+id/buttonSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입" />
+
+</LinearLayout>
