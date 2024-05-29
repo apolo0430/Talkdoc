@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,30 +43,29 @@ public class TranslationActivity extends AppCompatActivity
         playVoice = new PlayVoice(audioFile);
 
         setSupportActionBar(binding.appBarTranslation.toolbar);
-        binding.appBarTranslation.fab.setOnClickListener(new View.OnClickListener() {
+        ImageButton recordBtn = findViewById(R.id.recordButton);
+        recordBtn.setOnClickListener(new View.OnClickListener() {
             private boolean isRecording = false; // 녹음 중인지 여부를 나타내는 변수
-            FloatingActionButton fab = findViewById(R.id.fab);
-
             @Override
             public void onClick(View view)
             {
                 if (!isRecording) { // 녹음 중이 아닌 경우
                     Snackbar.make(view, "녹음 시작", Snackbar.LENGTH_LONG)
                             .setAction("Action", null)
-                            .setAnchorView(fab).show();
+                            .setAnchorView(recordBtn).show();
 
                     recordVoice.startRecording();
                     isRecording = true; // 녹음 중으로 설정
-                    fab.setImageResource(R.drawable.ic_mic_black);
+                    recordBtn.setImageResource(R.drawable.ic_mic_black);
                 }
                 else { // 녹음 중인 경우
                     Snackbar.make(view, "녹음 종료", Snackbar.LENGTH_LONG)
                             .setAction("Action", null)
-                            .setAnchorView(fab).show();
+                            .setAnchorView(recordBtn).show();
 
                     recordVoice.stopRecording();
                     isRecording = false; // 녹음 중지로 설정
-                    fab.setImageResource(R.drawable.ic_mic_none_black);
+                    recordBtn.setImageResource(R.drawable.ic_mic_none_black);
 
                     playVoice.startPlaying();
                 }
@@ -108,4 +108,5 @@ public class TranslationActivity extends AppCompatActivity
 
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
 }

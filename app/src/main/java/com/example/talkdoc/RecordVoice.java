@@ -41,4 +41,9 @@ public class RecordVoice
             mediaRecorder = null;
         }
     }
+
+    public void sendVoice()
+    {
+
+    }
 }

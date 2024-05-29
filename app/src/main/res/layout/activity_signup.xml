@@ -2,21 +2,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/mainColor">
 
     <!-- 이름 입력 필드 -->
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="이름" />
+        android:hint="이름"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@android:color/white" />
 
     <!-- 이메일 입력 필드 -->
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="이메일" />
+        android:hint="이메일"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@android:color/white" />
 
     <!-- 비밀번호 입력 필드 -->
     <EditText
@@ -24,32 +31,38 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="비밀번호"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:backgroundTint="@android:color/white" />
 
     <!-- 사용자 유형 선택 -->
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/radioButtonDoctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="의사" />
+            android:text="의사"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/radioButtonWorker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="근로자" />
+            android:text="근로자"
+            android:textColor="@color/white" />
 
         <RadioButton
             android:id="@+id/radioButtonGuardian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="보호자" />
+            android:text="보호자"
+            android:textColor="@color/white" />
     </RadioGroup>
 
     <!-- 회원가입 버튼 -->
@@ -57,6 +70,8 @@
         android:id="@+id/buttonSignUp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:text="회원가입"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black" />
 
 </LinearLayout>

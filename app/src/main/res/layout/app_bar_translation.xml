@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TranslationActivity">
+    tools:context=".TranslationActivity" >
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.Talkdoc.AppBarOverlay">
+        android:theme="@style/Theme.Talkdoc.AppBarOverlay" >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,7 +21,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_translation" />
-
+    <!--
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="70dp"
@@ -33,6 +33,6 @@
         app:backgroundTint="@color/mainColor"
         app:srcCompat="@drawable/ic_mic_none_black"
         app:maxImageSize="30dp"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter" />-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

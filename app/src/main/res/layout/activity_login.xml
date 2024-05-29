@@ -27,6 +27,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/white"
+            android:textColor="@color/white"
             android:hint="이메일"
             android:backgroundTint="@android:color/white" />
 
@@ -36,6 +37,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:textColorHint="@android:color/white"
+            android:textColor="@color/white"
             android:hint="비밀번호"
             android:inputType="textPassword"
             android:backgroundTint="@android:color/white" />
@@ -46,8 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="16dp"
-        android:background="@color/white" >
+        android:layout_marginTop="16dp">
 
         <!-- 로그인 버튼 -->
         <Button
@@ -55,7 +56,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="로그인"
-            android:layout_margin="4dp"/>
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black" />
 
         <!-- 회원가입 버튼 -->
         <Button
@@ -64,6 +67,8 @@
             android:layout_height="wrap_content"
             android:text="회원가입"
             android:layout_margin="4dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
             android:layout_marginStart="8dp" />
     </LinearLayout>
 </LinearLayout>
