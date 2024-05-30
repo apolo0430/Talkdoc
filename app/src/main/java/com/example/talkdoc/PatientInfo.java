@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 public class PatientInfo implements Parcelable
 {
+    private static PatientInfo instance;
     private String name;
     private String number;
     private int score;

@@ -17,10 +17,10 @@
 
     <!-- 이메일 입력 필드 -->
     <EditText
-        android:id="@+id/editTextEmail"
+        android:id="@+id/editTextID"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:hint="이메일"
+        android:hint="아이디"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:backgroundTint="@android:color/white" />
@@ -47,7 +47,7 @@
             android:id="@+id/radioButtonDoctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="의사"
+            android:text="의료인"
             android:textColor="@color/white" />
 
         <RadioButton

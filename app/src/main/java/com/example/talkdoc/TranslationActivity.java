@@ -67,9 +67,9 @@ public class TranslationActivity extends AppCompatActivity
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.HH-mm-ss");
 
-            String audioFileName = dateFormat.format(date) + selectedPatient.getName();
+            String audioFileName = "/" + dateFormat.format(date) + selectedPatient.getName() + ".3gp";
 
-            String audioFile = getExternalCacheDir().getAbsolutePath() + "/recorded_audio.3gp";
+            String audioFile = getExternalCacheDir().getAbsolutePath() + audioFileName;
 
             private RecordVoice recordVoice = new RecordVoice(audioFile);
             private PlayVoice playVoice = new PlayVoice(audioFile);

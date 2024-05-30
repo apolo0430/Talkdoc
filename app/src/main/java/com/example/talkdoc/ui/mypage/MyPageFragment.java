@@ -25,7 +25,7 @@ public class MyPageFragment extends Fragment
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        userInfo = new UserInfo();
+        userInfo = UserInfo.getInstance();
 
         binding = FragmentMypageBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -33,11 +33,8 @@ public class MyPageFragment extends Fragment
         userName = root.findViewById(R.id.user_name);
         userRelationship = root.findViewById(R.id.user_relationship);
 
-        userInfo.setName("박XX");
-        userInfo.setRelationship("의사");
-
         userName.setText(userInfo.getName());
-        userRelationship.setText(userInfo.getRelationship());
+        userRelationship.setText(userInfo.getAuthority());
 
         return root;
     }
