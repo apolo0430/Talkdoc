@@ -1,5 +1,8 @@
 package com.example.talkdoc;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -24,8 +27,6 @@ public class TranslationActivity extends AppCompatActivity
 {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTranslationBinding binding;
-    private RecordVoice recordVoice;
-    private PlayVoice playVoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,15 +38,42 @@ public class TranslationActivity extends AppCompatActivity
         binding = ActivityTranslationBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        String audioFile = getExternalCacheDir().getAbsolutePath() + "/recorded_audio.3gp";
-
-        recordVoice = new RecordVoice(audioFile);
-        playVoice = new PlayVoice(audioFile);
-
         setSupportActionBar(binding.appBarTranslation.toolbar);
         ImageButton recordBtn = findViewById(R.id.recordButton);
+
+        DrawerLayout drawer = binding.drawerLayout;
+        NavigationView navigationView = binding.navView;
+        View headerView = navigationView.getHeaderView(0);
+
+        ImageView imageView = headerView.findViewById(R.id.patient_image);
+        TextView nameText = headerView.findViewById(R.id.patient_name);
+        TextView numText = headerView.findViewById(R.id.patient_number);
+
+        imageView.setImageResource(R.drawable.ic_android_black);
+        nameText.setText(selectedPatient.getName());
+        numText.setText(selectedPatient.getNumber());
+
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_translation).setOpenableLayout(drawer).build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_translation);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
+
         recordBtn.setOnClickListener(new View.OnClickListener() {
             private boolean isRecording = false; // 녹음 중인지 여부를 나타내는 변수
+
+            Date date = new Date();
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.HH-mm-ss");
+
+            String audioFileName = dateFormat.format(date) + selectedPatient.getName();
+
+            String audioFile = getExternalCacheDir().getAbsolutePath() + "/recorded_audio.3gp";
+
+            private RecordVoice recordVoice = new RecordVoice(audioFile);
+            private PlayVoice playVoice = new PlayVoice(audioFile);
+
             @Override
             public void onClick(View view)
             {
@@ -71,25 +99,6 @@ public class TranslationActivity extends AppCompatActivity
                 }
             }
         });
-
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        View headerView = navigationView.getHeaderView(0);
-
-        ImageView imageView = headerView.findViewById(R.id.patient_image);
-        TextView nameText = headerView.findViewById(R.id.patient_name);
-        TextView numText = headerView.findViewById(R.id.patient_number);
-
-        imageView.setImageResource(R.drawable.ic_android_black);
-        nameText.setText(selectedPatient.getName());
-        numText.setText(selectedPatient.getNumber());
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_translation).setOpenableLayout(drawer).build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_translation);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
