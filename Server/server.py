@@ -25,7 +25,7 @@ def signup():
     if os.path.exists(f'login_data/{ID}.txt'):
         return '', 400
 
-    if auth == 1:
+    if auth == "1":
         # 환자 파일 확인
         if os.path.exists(f'user_data/{patient_id}.txt'):
             # 로그인 데이터 파일 생성
@@ -34,7 +34,7 @@ def signup():
             return '', 200
         else:
             return '', 404
-    elif auth in [2, 4]:
+    elif auth in ["2", "3", "4"]:
         # 환자 ID 확인 없이 로그인 데이터 파일 생성
         with open(f'login_data/{ID}.txt', 'w') as file:
             file.write(f'{password}\n{auth}\n{name}')

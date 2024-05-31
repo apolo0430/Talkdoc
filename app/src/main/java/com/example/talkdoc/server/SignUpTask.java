@@ -1,9 +1,7 @@
 package com.example.talkdoc.server;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -14,9 +12,10 @@ public class SignUpTask extends AsyncTask<String, Void, String>
     private String name;
     private String id;
     private String password;
-    private int authority;
+    private String authority;
+    private String patientId;
 
-    public SignUpTask(String name, String id, String password, int authority)
+    public SignUpTask(String name, String id, String password, String authority)
     {
         this.name = name;
         this.id = id;
@@ -39,10 +38,12 @@ public class SignUpTask extends AsyncTask<String, Void, String>
 
             // Create JSON input string
             String jsonInputString = "{\"name\": \"" + name +
-                                     "\", \"ID\": \"" + id +
-                                     "\", \"password\": \"" + password +
-                                     "\", \"auth\": \"" + authority +
-                                     "\", \"patient_id\": \"-1\"}";
+                    "\", \"ID\": \"" + id +
+                    "\", \"password\": \"" + password +
+                    "\", \"auth\": \"" + authority +
+                    "\", \"patient_id\": \"-1\"}";
+
+            System.out.println(jsonInputString);
 
             try (OutputStream os = httpClient.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
@@ -52,7 +53,7 @@ public class SignUpTask extends AsyncTask<String, Void, String>
             int responseCode = httpClient.getResponseCode();
             System.out.println("POST Response Code :: " + responseCode);
 
-            if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) { // success
                 BufferedReader in = new BufferedReader(new InputStreamReader(httpClient.getInputStream(), "utf-8"));
                 String inputLine;
                 StringBuffer response = new StringBuffer();
@@ -66,7 +67,7 @@ public class SignUpTask extends AsyncTask<String, Void, String>
                 return response.toString();
             }
             else {
-                return "POST request not worked";
+                return "POST request not worked: " + responseCode;
             }
         }
         catch (Exception e) {

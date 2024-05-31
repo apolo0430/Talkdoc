@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.example.talkdoc.server.GetPatientInfoTask;
+import com.example.talkdoc.server.SignUpTask;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

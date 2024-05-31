@@ -2,6 +2,8 @@ package com.example.talkdoc.ui.list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +22,15 @@ import com.example.talkdoc.PatientInfo;
 import com.example.talkdoc.R;
 import com.example.talkdoc.TranslationActivity;
 import com.example.talkdoc.databinding.FragmentListBinding;
+import com.example.talkdoc.server.GetPatientInfoTask;
 
 import java.util.ArrayList;
 
 public class ListFragment extends Fragment
 {
     private FragmentListBinding binding;
+    private CustomAdapter listViewAdapter;
+    private ArrayList<PatientInfo> patientList;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
@@ -34,18 +39,19 @@ public class ListFragment extends Fragment
 
         ListView listView = root.findViewById(R.id.listView);
 
-        ArrayList<PatientInfo> patientList = new ArrayList<PatientInfo>();
-        for (Integer i = 1; i <= 20; i++)
-        {
-            if (i < 10)
-                patientList.add(new PatientInfo("김XX", "00" + i.toString()));
-            else
-                patientList.add(new PatientInfo("김XX", "0" + i.toString()));
-        }
-
-        CustomAdapter listViewAdapter = new CustomAdapter(requireContext(), android.R.layout.simple_list_item_1, patientList);
-
+        patientList = new ArrayList<>();
+        listViewAdapter = new CustomAdapter(requireContext(), android.R.layout.simple_list_item_1, patientList);
         listView.setAdapter(listViewAdapter);
+
+        new GetPatientInfoTask(new GetPatientInfoTask.OnPatientInfoReceived()
+        {
+            @Override
+            public void onReceived(ArrayList<PatientInfo> updatedPatientList) {
+                patientList.clear();
+                patientList.addAll(updatedPatientList);
+                listViewAdapter.notifyDataSetChanged();
+            }
+        }).execute("http://192.168.9.249:5000/api/user");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
@@ -59,6 +65,7 @@ public class ListFragment extends Fragment
                 Intent intent = new Intent(requireActivity(), TranslationActivity.class);
                 // 선택된 항목의 데이터를 넘겨줄 수 있음
                 intent.putExtra("selectedPatient", selectedPatient);
+
                 startActivity(intent);
             }
         });
@@ -85,10 +92,7 @@ public class ListFragment extends Fragment
 
             // ImageView 인스턴스
             ImageView imageView = (ImageView) v.findViewById(R.id.patient_image);
-
-            // 리스트뷰의 아이템에 이미지를 변경한다.
-            imageView.setImageResource(R.drawable.ic_android_black);
-            imageView.setColorFilter(R.color.purple_200);
+            imageView.setImageBitmap(items.get(position).getImage());
 
             TextView nameText = (TextView) v.findViewById(R.id.patient_name);
             nameText.setText(items.get(position).getName());

@@ -12,19 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.talkdoc.server.GetPatientInfoTask;
 import com.example.talkdoc.server.SignUpTask;
-
-import java.io.IOException;
 
 public class SignUpActivity extends AppCompatActivity
 {
-
     private EditText editTextName, editTextID, editTextPassword;
     private RadioGroup radioGroup;
     private Button buttonSignUp;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -46,16 +41,16 @@ public class SignUpActivity extends AppCompatActivity
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 RadioButton radioButton = findViewById(selectedId);
                 String userType = radioButton.getText().toString();
-                int userType_num = 0;
+                String userType_num = "-1";
 
                 if (userType.compareTo("환자") == 0)
-                    userType_num = 1;
+                    userType_num = "1";
                 else if (userType.compareTo("보호자") == 0)
-                    userType_num = 2;
+                    userType_num = "2";
                 else if (userType.compareTo("근로자") == 0)
-                    userType_num = 3;
+                    userType_num = "3";
                 else if (userType.compareTo("의료인") == 0)
-                    userType_num = 4;
+                    userType_num = "4";
 
                 // 모든 필드가 입력되었는지 확인
                 if (name.isEmpty() || id.isEmpty() || password.isEmpty() || selectedId == -1) {

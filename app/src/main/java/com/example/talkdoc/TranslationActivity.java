@@ -3,6 +3,7 @@ package com.example.talkdoc;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -19,7 +20,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.talkdoc.databinding.ActivityTranslationBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -48,10 +48,12 @@ public class TranslationActivity extends AppCompatActivity
         ImageView imageView = headerView.findViewById(R.id.patient_image);
         TextView nameText = headerView.findViewById(R.id.patient_name);
         TextView numText = headerView.findViewById(R.id.patient_number);
+        TextView addressText = headerView.findViewById(R.id.patient_address);
 
-        imageView.setImageResource(R.drawable.ic_android_black);
+        //imageView.setImageBitmap(selectedPatient.getImage());
         nameText.setText(selectedPatient.getName());
         numText.setText(selectedPatient.getNumber());
+        addressText.setText(selectedPatient.getAddress());
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
