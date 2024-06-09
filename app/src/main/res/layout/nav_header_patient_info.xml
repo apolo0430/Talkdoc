@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:background="@color/white">
 
     <LinearLayout
+        android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -17,17 +21,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="30dp">
 
             <TextView
                 android:id="@+id/patient_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="16dp"
+                android:layout_weight="0.5"
                 android:text="환자 이름"
                 android:textSize="25dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 android:textStyle="bold"
                 android:textColor="@android:color/white"/>
 
@@ -35,7 +38,7 @@
                 android:id="@+id/patient_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
+                android:layout_weight="2"
                 android:layout_gravity="bottom"
                 android:text="환자 번호"
                 android:textSize="15dp"
@@ -81,18 +84,18 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:fillViewport="true"
         android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp"
             android:background="@android:color/white">
-
+<!--
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,20 +111,20 @@
                 android:text="치아 분석 내용"
                 android:textSize="18dp"
                 android:layout_marginTop="4dp" />
-
+-->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="뇌질환 정보"
                 android:textSize="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/brain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="치아 분석 내용"
+                android:text="뇌질환 정보"
                 android:textSize="18dp"
                 android:layout_marginTop="4dp" />
 

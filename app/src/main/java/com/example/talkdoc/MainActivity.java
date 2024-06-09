@@ -24,9 +24,10 @@ public class MainActivity extends AppCompatActivity
     private ActivityMainBinding binding;
     private static final int REQUEST_PERMISSION_CODE = 101;
     private static final String[] REQUIRED_PERMISSIONS = {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.RECORD_AUDIO
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA // 카메라 권한 추가
     };
 
     @Override
@@ -51,13 +52,11 @@ public class MainActivity extends AppCompatActivity
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_list, R.id.navigation_checkup, R.id.navigation_mypage)
+                R.id.navigation_list, R.id.navigation_brain_checkup, R.id.navigation_teeth_checkup, R.id.navigation_mypage)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-
     }
 
     private boolean checkPermissions()
@@ -81,8 +80,15 @@ public class MainActivity extends AppCompatActivity
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 권한이 허용된 경우 앱 초기화 작업을 진행
+            boolean allPermissionsGranted = true;
+            for (int result : grantResults) {
+                if (result != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false;
+                    break;
+                }
+            }
+            if (allPermissionsGranted) {
+                // 모든 권한이 허용된 경우 앱 초기화 작업을 진행
                 //initializeApp();
             } else {
                 // 권한이 거부된 경우 사용자에게 앱의 기능에 대한 설명이나 추가적인 권한 요청을 할 수 있습니다.

@@ -40,11 +40,6 @@ public class ListFragment extends Fragment
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        /*
-        if (UserInfo.getInstance().getAuthority().equals("보호자")) {
-            showInputDialog();
-        }*/
-
         System.out.println(UserInfo.getInstance().getPatientName());
 
         binding = FragmentListBinding.inflate(inflater, container, false);
@@ -55,16 +50,7 @@ public class ListFragment extends Fragment
         patientList = new ArrayList<>();
         listViewAdapter = new CustomAdapter(requireContext(), android.R.layout.simple_list_item_1, patientList);
         listView.setAdapter(listViewAdapter);
-        /*
-        PatientInfo patientInfo = searchPatientByName(UserInfo.getInstance().getPatientName());
 
-        if (patientInfo != null) {
-            Intent intent = new Intent(requireActivity(), TranslationActivity.class);
-            intent.putExtra("selectedPatient", patientInfo);
-
-            startActivity(intent);
-        }
-        */
         new GetPatientInfoTask(new GetPatientInfoTask.OnPatientInfoReceived()
         {
             @Override
@@ -73,7 +59,7 @@ public class ListFragment extends Fragment
                 patientList.addAll(updatedPatientList);
                 listViewAdapter.notifyDataSetChanged();
             }
-        }).execute("http://192.168.221.249:5000/api/user");
+        }).execute("http://14.63.125.208:7000/api/user");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {

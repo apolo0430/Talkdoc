@@ -59,10 +59,12 @@ public class GetPatientInfoTask extends AsyncTask<String, Void, String[]>
                 }
 
                 return results;
-            } else {
+            }
+            else {
                 return new String[]{"GET request not worked"};
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return new String[]{"Exception occurred"};
         }
@@ -72,6 +74,7 @@ public class GetPatientInfoTask extends AsyncTask<String, Void, String[]>
     protected void onPostExecute(String[] result) {
         if (result != null && result.length > 0 && !result[0].equals("Exception occurred")) {
             System.out.println("SUCCEED");
+            System.out.println(result[0]);
 
             setPatientList(result);
             if (callback != null) callback.onReceived(patientList);

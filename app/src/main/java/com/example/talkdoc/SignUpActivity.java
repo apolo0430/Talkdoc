@@ -34,7 +34,8 @@ public class SignUpActivity extends AppCompatActivity
 
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 String name = editTextName.getText().toString();
                 String id = editTextID.getText().toString();
                 String password = editTextPassword.getText().toString();
@@ -58,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    new SignUpTask(name, id, password, userType_num).execute("http://192.168.9.249:5000/signup");
+                    new SignUpTask(name, id, password, userType_num).execute("http://14.63.125.208:7000/signup");
 
                     // 회원가입 완료 후 로그인 화면으로 이동
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);

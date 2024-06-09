@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.talkdoc.R;
@@ -24,16 +25,23 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class CheckupFragment extends Fragment {
+public class BrainCheckupFragment extends Fragment {
     private int resultScore = 0;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_checkup, container, false);
+        View view = inflater.inflate(R.layout.fragment_brain_checkup, container, false);
         LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
         Button submitButton = new Button(getContext());
         submitButton.setText("제출");
+        submitButton.setBackground(ContextCompat.getDrawable(getContext(), R.color.mainColor));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+        );
+        params.setMargins(0, 20, 0, 0); // 위에 16dp의 마진 추가
+        submitButton.setLayoutParams(params);
 
         ArrayList<String> questionList = readAssetFile();
         ArrayList<String> questions = new ArrayList<>();

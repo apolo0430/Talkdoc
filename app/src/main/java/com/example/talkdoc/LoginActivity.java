@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity
                 String id = editTextID.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                new LoginTask(id, password).execute("http://192.168.221.249:5000/login");
+                new LoginTask(id, password).execute("http://14.63.125.208:7000/login");
 
                 Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
                 startActivity(intent);

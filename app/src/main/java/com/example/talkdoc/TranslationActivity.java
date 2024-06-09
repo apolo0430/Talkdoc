@@ -29,6 +29,8 @@ public class TranslationActivity extends AppCompatActivity
 {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTranslationBinding binding;
+    private TextView originalText;
+    private TextView resultText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,25 +44,13 @@ public class TranslationActivity extends AppCompatActivity
 
         setSupportActionBar(binding.appBarTranslation.toolbar);
         ImageButton recordBtn = findViewById(R.id.recordButton);
+        originalText = findViewById(R.id.original_text);
+        resultText = findViewById(R.id.result_text);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        View headerView = navigationView.getHeaderView(0);
 
-        TextView nameText = headerView.findViewById(R.id.patient_name);
-        TextView numText = headerView.findViewById(R.id.patient_number);
-        TextView addressText = headerView.findViewById(R.id.patient_address);
-        TextView emailText = headerView.findViewById(R.id.patient_email);
-        TextView birthText = headerView.findViewById(R.id.patient_birth);
-        TextView phoneText = headerView.findViewById(R.id.patient_phone);
-
-        //imageView.setImageBitmap(selectedPatient.getImage());
-        nameText.setText(selectedPatient.getName());
-        numText.setText("#" + selectedPatient.getNumber());
-        addressText.setText("- 주소:\n" + selectedPatient.getAddress());
-        emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
-        birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
-        phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
+        setInfoText(selectedPatient, navigationView.getHeaderView(0));
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -87,6 +77,8 @@ public class TranslationActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 if (!isRecording) { // 녹음 중이 아닌 경우
+                    initializeTranslationText();
+
                     Snackbar.make(view, "녹음 시작", Snackbar.LENGTH_LONG)
                             .setAction("Action", null)
                             .setAnchorView(recordBtn).show();
@@ -105,9 +97,52 @@ public class TranslationActivity extends AppCompatActivity
                     recordBtn.setImageResource(R.drawable.ic_mic_none_black);
 
                     playVoice.startPlaying();
+                    setTranslationText();
                 }
             }
         });
+    }
+
+    private void initializeTranslationText()
+    {
+        originalText.setText("번역할 내용");
+        resultText.setText("번역 결과");
+    }
+
+    private void setTranslationText()
+    {
+        originalText.setText("내용");
+        resultText.setText("결과");
+    }
+
+    private void setInfoText(PatientInfo selectedPatient, View headerView)
+    {
+        TextView nameText = headerView.findViewById(R.id.patient_name);
+        TextView numText = headerView.findViewById(R.id.patient_number);
+        TextView addressText = headerView.findViewById(R.id.patient_address);
+        TextView emailText = headerView.findViewById(R.id.patient_email);
+        TextView birthText = headerView.findViewById(R.id.patient_birth);
+        TextView phoneText = headerView.findViewById(R.id.patient_phone);
+        TextView brainText = headerView.findViewById(R.id.brain);
+        TextView doctorText = headerView.findViewById(R.id.doctor);
+
+        // Basic
+        nameText.setText(selectedPatient.getName());
+        numText.setText("#" + selectedPatient.getNumber());
+        addressText.setText("- 주소:\n" + selectedPatient.getAddress());
+        emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
+        birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
+        phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
+
+        Date date = new Date();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.HH-mm-ss");
+
+        String d = dateFormat.format(date);
+
+        // others
+        brainText.setText(d + "\na\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np");
+        doctorText.setText("a\nb\nc\nd\ne\nf\ng\nh\ni\nj\nk\nl\nm\nn\no\np");
     }
 
     @Override

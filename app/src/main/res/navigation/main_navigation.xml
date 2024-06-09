@@ -11,10 +11,16 @@
         tools:layout="@layout/fragment_list" />
 
     <fragment
-        android:id="@+id/navigation_checkup"
-        android:name="com.example.talkdoc.ui.checkup.CheckupFragment"
-        android:label="@string/title_checkup"
-        tools:layout="@layout/fragment_checkup" />
+        android:id="@+id/navigation_brain_checkup"
+        android:name="com.example.talkdoc.ui.checkup.BrainCheckupFragment"
+        android:label="@string/title_brain_checkup"
+        tools:layout="@layout/fragment_brain_checkup" />
+
+    <fragment
+        android:id="@+id/navigation_teeth_checkup"
+        android:name="com.example.talkdoc.ui.checkup.TeethCheckupFragment"
+        android:label="@string/title_teeth_checkup"
+        tools:layout="@layout/fragment_teeth_checkup" />
 
     <fragment
         android:id="@+id/navigation_mypage"
