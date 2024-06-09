@@ -1,9 +1,11 @@
 import os
 import base64
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
+from flask_cors import CORS
 import json
 
 app = Flask(__name__)
+CORS(app)
 
 # Ensure the necessary directories exist
 os.makedirs('user_data', exist_ok=True)

@@ -51,7 +51,7 @@ public class ListFragment extends Fragment
                 patientList.addAll(updatedPatientList);
                 listViewAdapter.notifyDataSetChanged();
             }
-        }).execute("http://192.168.9.249:5000/api/user");
+        }).execute("http://192.168.221.249:5000/api/user");
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
