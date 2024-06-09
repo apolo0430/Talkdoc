@@ -18,13 +18,8 @@ public class TranslationFragment extends Fragment
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        TranslationViewModel translationViewModel = new ViewModelProvider(this).get(TranslationViewModel.class);
-
         binding = FragmentTranslationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        final TextView textView = binding.textTranslation;
-        translationViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         return root;
     }

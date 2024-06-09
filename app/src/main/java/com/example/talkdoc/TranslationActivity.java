@@ -23,6 +23,8 @@ import com.example.talkdoc.databinding.ActivityTranslationBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 public class TranslationActivity extends AppCompatActivity
 {
     private AppBarConfiguration mAppBarConfiguration;
@@ -45,15 +47,20 @@ public class TranslationActivity extends AppCompatActivity
         NavigationView navigationView = binding.navView;
         View headerView = navigationView.getHeaderView(0);
 
-        ImageView imageView = headerView.findViewById(R.id.patient_image);
         TextView nameText = headerView.findViewById(R.id.patient_name);
         TextView numText = headerView.findViewById(R.id.patient_number);
         TextView addressText = headerView.findViewById(R.id.patient_address);
+        TextView emailText = headerView.findViewById(R.id.patient_email);
+        TextView birthText = headerView.findViewById(R.id.patient_birth);
+        TextView phoneText = headerView.findViewById(R.id.patient_phone);
 
         //imageView.setImageBitmap(selectedPatient.getImage());
         nameText.setText(selectedPatient.getName());
-        numText.setText(selectedPatient.getNumber());
-        addressText.setText(selectedPatient.getAddress());
+        numText.setText("#" + selectedPatient.getNumber());
+        addressText.setText("- 주소:\n" + selectedPatient.getAddress());
+        emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
+        birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
+        phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

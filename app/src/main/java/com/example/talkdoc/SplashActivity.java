@@ -1,8 +1,14 @@
 package com.example.talkdoc;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,14 +17,16 @@ public class SplashActivity extends AppCompatActivity
     private static final long SPLASH_DELAY = 3000; // 스플래시 화면이 표시될 시간(밀리초)
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
         // 지연된 작업을 예약하여 메인 화면으로 전환
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run()
+            {
                 // 메인 화면으로 전환하는 인텐트 생성
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);

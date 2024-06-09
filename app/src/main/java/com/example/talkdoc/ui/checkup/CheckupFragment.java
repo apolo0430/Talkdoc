@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -100,7 +101,8 @@ public class CheckupFragment extends Fragment {
             }
         }
         // 최종 점수 출력
-        System.out.println("Total Score: " + resultScore);
+        Toast.makeText(getContext(), "Total Score: " + resultScore, Toast.LENGTH_SHORT).show();
+
     }
 
     private int getScoreForOption(String text) {

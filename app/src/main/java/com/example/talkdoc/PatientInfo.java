@@ -19,12 +19,12 @@ public class PatientInfo implements Parcelable
 
     public PatientInfo(String name, String address, String email, String birth, String phone, Bitmap image, String number) {
         this.name = name;
+        this.number = number;
         this.address = address;
         this.email = email;
         this.birth = birth;
         this.phone = phone;
         this.image = image;
-        this.number = number;
     }
 
     // Parcelable 구현
@@ -32,6 +32,10 @@ public class PatientInfo implements Parcelable
     {
         name = in.readString();
         number = in.readString();
+        address = in.readString();
+        email = in.readString();
+        birth = in.readString();
+        phone = in.readString();
     }
 
     public String getName()
@@ -73,23 +77,11 @@ public class PatientInfo implements Parcelable
     public void writeToParcel(Parcel dest, int flags)
     {
         dest.writeString(name);
+        dest.writeString(number);
         dest.writeString(address);
         dest.writeString(email);
         dest.writeString(birth);
         dest.writeString(phone);
-
-        // 이미지를 byte 배열로 변환하여 Parcel에 쓰기
-        /*if (image != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            dest.writeByteArray(byteArray);
-        }
-        else {
-            dest.writeByteArray(null);
-        }*/
-
-        dest.writeString(number);
     }
 
     @Override

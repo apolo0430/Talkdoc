@@ -5,6 +5,7 @@ public class UserInfo
     private static UserInfo instance;
     private String name;
     private String authority;
+    private String patientName;
 
     public void setName(String name)
     {
@@ -16,6 +17,11 @@ public class UserInfo
         this.authority = relationship;
     }
 
+    public void setPatientName(String name)
+    {
+        this.patientName = name;
+    }
+
     public String getName()
     {
         return name;
@@ -24,6 +30,11 @@ public class UserInfo
     public String getAuthority()
     {
         return authority;
+    }
+
+    public String getPatientName()
+    {
+        return patientName;
     }
 
     public static UserInfo getInstance()
