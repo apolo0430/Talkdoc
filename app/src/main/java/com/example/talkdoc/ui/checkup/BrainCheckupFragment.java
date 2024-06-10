@@ -2,6 +2,7 @@ package com.example.talkdoc.ui.checkup;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,18 +20,26 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.talkdoc.R;
+import com.example.talkdoc.server.GetQuestionFileTask;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-public class BrainCheckupFragment extends Fragment {
+public class BrainCheckupFragment extends Fragment
+{
     private int resultScore = 0;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_brain_checkup, container, false);
         LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
         Button submitButton = new Button(getContext());
@@ -67,7 +76,8 @@ public class BrainCheckupFragment extends Fragment {
         return view;
     }
 
-    private void addQuestion(LinearLayout parent, int questionNumber, String questionText, String[] score) {
+    private void addQuestion(LinearLayout parent, int questionNumber, String questionText, String[] score)
+    {
         TextView questionTextView = new TextView(getContext());
         questionTextView.setText("질문 " + questionNumber + ": " + questionText);
         questionTextView.setPadding(0, 16, 0, 8);
@@ -94,13 +104,16 @@ public class BrainCheckupFragment extends Fragment {
         parent.addView(radioGroup);
     }
 
-    private void calculateScore(LinearLayout parent) {
+    private void calculateScore(LinearLayout parent)
+    {
         resultScore = 0;
+
         for (int i = 0; i < parent.getChildCount(); i++) {
             View view = parent.getChildAt(i);
             if (view instanceof RadioGroup) {
                 RadioGroup radioGroup = (RadioGroup) view;
                 int selectedId = radioGroup.getCheckedRadioButtonId();
+
                 if (selectedId != -1) {
                     RadioButton selectedButton = radioGroup.findViewById(selectedId);
                     String text = selectedButton.getText().toString();
@@ -108,12 +121,13 @@ public class BrainCheckupFragment extends Fragment {
                 }
             }
         }
+
         // 최종 점수 출력
         Toast.makeText(getContext(), "Total Score: " + resultScore, Toast.LENGTH_SHORT).show();
-
     }
 
-    private int getScoreForOption(String text) {
+    private int getScoreForOption(String text)
+    {
         switch (text) {
             case "0점":
                 return 0;
@@ -130,7 +144,8 @@ public class BrainCheckupFragment extends Fragment {
         }
     }
 
-    private ArrayList<String> readAssetFile() {
+    private ArrayList<String> readAssetFile()
+    {
         Context context = getActivity();
         ArrayList<String> questionList = new ArrayList<>();
 
@@ -147,10 +162,20 @@ public class BrainCheckupFragment extends Fragment {
                     System.out.println(line);
                 }
                 inputStream.close();
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        return questionList;
+    }
+
+    private ArrayList<String> readQuestionFile()
+    {
+        ArrayList<String> questionList = new ArrayList<>();
+
+
 
         return questionList;
     }
