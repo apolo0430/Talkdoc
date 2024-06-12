@@ -5,7 +5,7 @@ public class UserInfo
     private static UserInfo instance;
     private String name;
     private String authority;
-    private String patientName;
+    private String patientName = null;
 
     public void setName(String name)
     {

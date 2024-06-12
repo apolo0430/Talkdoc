@@ -80,6 +80,15 @@
             android:textSize="18dp"
             android:layout_marginTop="4dp"
             android:textColor="@android:color/white"/>
+
+        <TextView
+            android:id="@+id/brain_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="뇌질환 점수"
+            android:textSize="18dp"
+            android:layout_marginTop="4dp"
+            android:textColor="@android:color/white"/>
     </LinearLayout>
 
     <ScrollView
@@ -95,45 +104,12 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:background="@android:color/white">
-<!--
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="치아분석"
-                android:textSize="20dp"
-                android:layout_marginTop="4dp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/teeth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="치아 분석 내용"
-                android:textSize="18dp"
-                android:layout_marginTop="4dp" />
--->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="뇌질환 정보"
-                android:textSize="20dp"
-                android:layout_marginTop="4dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/brain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="뇌질환 정보"
-                android:textSize="18dp"
-                android:layout_marginTop="4dp" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="의사 소견"
                 android:textSize="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:textStyle="bold"/>
 
             <TextView

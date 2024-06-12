@@ -15,15 +15,16 @@ public class PatientInfo implements Parcelable
     private String phone;
     private Bitmap image;
     private String number;
-    private int score;
+    private String score;
 
-    public PatientInfo(String name, String address, String email, String birth, String phone, Bitmap image, String number) {
+    public PatientInfo(String name, String address, String email, String birth, String phone, String score, Bitmap image, String number) {
         this.name = name;
         this.number = number;
         this.address = address;
         this.email = email;
         this.birth = birth;
         this.phone = phone;
+        this.score = score;
         this.image = image;
     }
 
@@ -61,6 +62,11 @@ public class PatientInfo implements Parcelable
     public String getPhone()
     {
         return phone;
+    }
+
+    public String getScore()
+    {
+        return score;
     }
 
     public Bitmap getImage()

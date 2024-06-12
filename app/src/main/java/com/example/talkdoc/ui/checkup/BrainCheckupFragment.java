@@ -2,7 +2,7 @@ package com.example.talkdoc.ui.checkup;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.os.AsyncTask;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +20,10 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.talkdoc.R;
-import com.example.talkdoc.server.GetQuestionFileTask;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class BrainCheckupFragment extends Fragment
@@ -44,6 +38,8 @@ public class BrainCheckupFragment extends Fragment
         LinearLayout linearLayout = view.findViewById(R.id.linearLayout);
         Button submitButton = new Button(getContext());
         submitButton.setText("제출");
+        submitButton.setTextSize(20);
+        submitButton.setTextColor(Color.WHITE);
         submitButton.setBackground(ContextCompat.getDrawable(getContext(), R.color.mainColor));
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -80,6 +76,7 @@ public class BrainCheckupFragment extends Fragment
     {
         TextView questionTextView = new TextView(getContext());
         questionTextView.setText("질문 " + questionNumber + ": " + questionText);
+        questionTextView.setTextSize(20);
         questionTextView.setPadding(0, 16, 0, 8);
         parent.addView(questionTextView);
 
@@ -88,16 +85,19 @@ public class BrainCheckupFragment extends Fragment
 
         RadioButton option1 = new RadioButton(getContext());
         option1.setText(score[0] + "점");
+        option1.setTextSize(20);
         option1.setId(View.generateViewId());
         radioGroup.addView(option1);
 
         RadioButton option2 = new RadioButton(getContext());
         option2.setText(score[1] + "점");
+        option2.setTextSize(20);
         option2.setId(View.generateViewId());
         radioGroup.addView(option2);
 
         RadioButton option3 = new RadioButton(getContext());
         option3.setText(score[2] + "점");
+        option3.setTextSize(20);
         option3.setId(View.generateViewId());
         radioGroup.addView(option3);
 
@@ -122,8 +122,16 @@ public class BrainCheckupFragment extends Fragment
             }
         }
 
+        String resultText = "";
+        if (resultScore >= 7)
+            resultText = "정상";
+        else if (resultScore > -7 && resultScore < 7)
+            resultText = "위험";
+        else
+            resultText = "심각";
+
         // 최종 점수 출력
-        Toast.makeText(getContext(), "Total Score: " + resultScore, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "총점: " + resultScore + "점\n단계: " + resultText, Toast.LENGTH_SHORT).show();
     }
 
     private int getScoreForOption(String text)
@@ -167,15 +175,6 @@ public class BrainCheckupFragment extends Fragment
                 e.printStackTrace();
             }
         }
-
-        return questionList;
-    }
-
-    private ArrayList<String> readQuestionFile()
-    {
-        ArrayList<String> questionList = new ArrayList<>();
-
-
 
         return questionList;
     }

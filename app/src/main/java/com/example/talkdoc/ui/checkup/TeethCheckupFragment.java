@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,12 +17,15 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talkdoc.R;
 import com.example.talkdoc.databinding.FragmentTeethCheckupBinding;
+import com.example.talkdoc.server.GetTeethResultTask;
 
 public class TeethCheckupFragment extends Fragment
 {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private FragmentTeethCheckupBinding binding;
     private ImageView imageView;
+    private TextView resultTextView;
+    private Bitmap imageBitmap;
 
     @Nullable
     @Override
@@ -32,6 +36,7 @@ public class TeethCheckupFragment extends Fragment
 
         imageView = binding.imageView; // imageView는 fragment_teeth_checkup.xml에 정의되어 있어야 합니다.
         Button button = binding.buttonTakePicture; // buttonTakePicture는 fragment_teeth_checkup.xml에 정의되어 있어야 합니다.
+        resultTextView = binding.resultTextView; // resultTextView는 fragment_teeth_checkup.xml에 정의되어 있어야 합니다.
 
         button.setOnClickListener(v -> openCamera());
 
@@ -52,8 +57,10 @@ public class TeethCheckupFragment extends Fragment
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == getActivity().RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
+            // 서버로 이미지를 전송하고 결과를 받아오는 비동기 작업 실행
+            new GetTeethResultTask(resultTextView).execute(imageBitmap, "http://192.168.221.249:5000/predict");
         }
     }
 

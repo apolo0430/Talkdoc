@@ -1,10 +1,13 @@
 package com.example.talkdoc;
 
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,16 +25,18 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TranslationActivity extends AppCompatActivity implements TranslateTask.TranslateTaskListener, DoctorDataTask.DoctorDataTaskListener {
+public class TranslationActivity extends AppCompatActivity implements TranslateTask.TranslateTaskListener, DoctorDataTask.DoctorDataTaskListener
+{
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityTranslationBinding binding;
-    private TextView originalText;
     private TextView resultText;
     private TextView doctorText;
     private PatientInfo selectedPatient;
+    private ExtAudioRecorder recorder;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         selectedPatient = getIntent().getParcelableExtra("selectedPatient");
@@ -41,7 +46,6 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
 
         setSupportActionBar(binding.appBarTranslation.toolbar);
         ImageButton recordBtn = findViewById(R.id.recordButton);
-        originalText = findViewById(R.id.original_text);
         resultText = findViewById(R.id.result_text);
 
         DrawerLayout drawer = binding.drawerLayout;
@@ -58,16 +62,11 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        recordBtn.setOnClickListener(new View.OnClickListener() {
-            private boolean isRecording = false; // 녹음 중인지 여부를 나타내는 변수
-
-            Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd.HH-mm-ss");
-            String audioFileName = "/" + dateFormat.format(date) + selectedPatient.getName() + ".3gp";
-            String audioFile = getExternalCacheDir().getAbsolutePath() + audioFileName;
-
-            private RecordVoice recordVoice = new RecordVoice(audioFile);
-            private PlayVoice playVoice = new PlayVoice(audioFile);
+        recordBtn.setOnClickListener(new View.OnClickListener()
+        {
+            boolean isRecording = false; // 녹음 중인지 여부를 나타내는 변수
+            String audioFileName = "/audio.wav";
+            String audioFilePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC) + audioFileName;
 
             @Override
             public void onClick(View view) {
@@ -78,61 +77,71 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
                             .setAction("Action", null)
                             .setAnchorView(recordBtn).show();
 
-                    recordVoice.startRecording();
+                    start(audioFilePath);
                     isRecording = true; // 녹음 중으로 설정
                     recordBtn.setImageResource(R.drawable.ic_mic_black);
-                } else { // 녹음 중인 경우
+                }
+                else { // 녹음 중인 경우
                     Snackbar.make(view, "녹음 종료", Snackbar.LENGTH_LONG)
                             .setAction("Action", null)
                             .setAnchorView(recordBtn).show();
 
-                    recordVoice.stopRecording();
+                    stop();
                     isRecording = false; // 녹음 중지로 설정
                     recordBtn.setImageResource(R.drawable.ic_mic_none_black);
 
-                    playVoice.startPlaying();
+                    String province = "0";
+                    if (selectedPatient.getAddress().contains("경상남도") || selectedPatient.getAddress().contains("경상북도"))
+                        province = "1";
+                    else if (selectedPatient.getAddress().contains("강원도"))
+                        province = "2";
 
                     // 서버로 음성 파일 전송 및 번역 요청
-                    new TranslateTask(TranslationActivity.this).execute(audioFile, "http://14.63.125.208:7000/translate", "1"); // province 코드 수정 필요
+                    new TranslateTask(TranslationActivity.this).execute(audioFilePath, "http://14.63.125.208:7000", province);
                 }
             }
         });
 
         // Doctor 데이터 요청
-        new DoctorDataTask(this).execute("1", "http://14.63.125.208:7000");
+        new DoctorDataTask(this).execute(selectedPatient.getNumber(), "http://14.63.125.208:7000");
     }
 
     @Override
-    public void onTranslationResult(String result) {
+    public void onTranslationResult(String result)
+    {
         if (result != null) {
-            originalText.setText("녹음된 내용");
             resultText.setText(result);
-        } else {
+        }
+        else {
             resultText.setText("번역 실패");
         }
     }
 
     @Override
-    public void onDoctorDataResult(String[] result) {
+    public void onDoctorDataResult(String[] result)
+    {
         if (result != null) {
             doctorText.setText(String.join("\n", result));
-        } else {
-            doctorText.setText("Doctor data not found");
+        }
+        else {
+            doctorText.setText("의사 소견 없음");
         }
     }
 
-    private void initializeTranslationText() {
-        originalText.setText("번역할 내용");
+    private void initializeTranslationText()
+    {
         resultText.setText("번역 결과");
     }
 
-    private void setInfoText(PatientInfo selectedPatient, View headerView) {
+    private void setInfoText(PatientInfo selectedPatient, View headerView)
+    {
         TextView nameText = headerView.findViewById(R.id.patient_name);
         TextView numText = headerView.findViewById(R.id.patient_number);
         TextView addressText = headerView.findViewById(R.id.patient_address);
         TextView emailText = headerView.findViewById(R.id.patient_email);
         TextView birthText = headerView.findViewById(R.id.patient_birth);
         TextView phoneText = headerView.findViewById(R.id.patient_phone);
+        TextView scoreText = headerView.findViewById(R.id.brain_score);
 
         // Basic
         nameText.setText(selectedPatient.getName());
@@ -141,20 +150,40 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
         birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
         phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
-
-        // others
+        scoreText.setText("- 뇌질환 점수:\n" + selectedPatient.getScore());
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.translation, menu);
+
         return true;
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_translation);
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+
+    public void start(String filePath)
+    {
+        recorder = ExtAudioRecorder.getInstanse(false);
+
+        recorder.setOutputFile(filePath);
+        recorder.prepare();
+        recorder.start();
+    }
+
+    public void stop()
+    {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
     }
 }

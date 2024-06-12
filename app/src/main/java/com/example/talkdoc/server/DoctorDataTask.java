@@ -11,20 +11,24 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DoctorDataTask extends AsyncTask<String, Void, String[]> {
+public class DoctorDataTask extends AsyncTask<String, Void, String[]>
+{
     private static final String TAG = "DoctorDataTask";
     private DoctorDataTaskListener listener;
 
-    public interface DoctorDataTaskListener {
+    public interface DoctorDataTaskListener
+    {
         void onDoctorDataResult(String[] result);
     }
 
-    public DoctorDataTask(DoctorDataTaskListener listener) {
+    public DoctorDataTask(DoctorDataTaskListener listener)
+    {
         this.listener = listener;
     }
 
     @Override
-    protected String[] doInBackground(String... params) {
+    protected String[] doInBackground(String... params)
+    {
         String doctorId = params[0];
         String serverUrl = params[1];
 
@@ -55,19 +59,25 @@ public class DoctorDataTask extends AsyncTask<String, Void, String[]> {
                 for (int i = 0; i < lines.length(); i++) {
                     doctorData[i] = lines.getString(i);
                 }
+
                 return doctorData;
-            } else {
+            }
+            else {
                 Log.e(TAG, "Server returned response code: " + responseCode);
+
                 return null;
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             Log.e(TAG, "Exception occurred during doctor data request", e);
+
             return null;
         }
     }
 
     @Override
-    protected void onPostExecute(String[] result) {
+    protected void onPostExecute(String[] result)
+    {
         if (listener != null) {
             listener.onDoctorDataResult(result);
         }

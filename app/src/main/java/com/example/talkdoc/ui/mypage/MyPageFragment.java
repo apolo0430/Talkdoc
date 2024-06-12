@@ -18,8 +18,6 @@ public class MyPageFragment extends Fragment
 {
     private FragmentMypageBinding binding;
     private UserInfo userInfo;
-
-    private ImageView userImage;
     private TextView userName;
     private TextView userRelationship;
 

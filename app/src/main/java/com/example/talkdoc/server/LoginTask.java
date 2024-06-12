@@ -16,7 +16,6 @@ public class LoginTask  extends AsyncTask<String, Void, String>
 {
     private String id;
     private String password;
-
     private UserInfo userInfo;
 
     public LoginTask(String id, String password)
@@ -82,7 +81,8 @@ public class LoginTask  extends AsyncTask<String, Void, String>
             System.out.println("RESULT: " + result);
 
             setUserInfo(result);
-        } else {
+        }
+        else {
             System.out.println("Error during POST request");
         }
     }

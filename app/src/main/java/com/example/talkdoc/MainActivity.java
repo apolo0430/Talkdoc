@@ -4,8 +4,6 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 
-import com.example.talkdoc.server.GetPatientInfoTask;
-import com.example.talkdoc.server.SignUpTask;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -49,24 +47,46 @@ public class MainActivity extends AppCompatActivity
         }
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        AppBarConfiguration appBarConfiguration;
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_list, R.id.navigation_brain_checkup, R.id.navigation_teeth_checkup, R.id.navigation_mypage)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        if (UserInfo.getInstance().getAuthority().compareTo("의료인") == 0) {
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.bottom_nav_menu_doctor);
+            appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_list, R.id.navigation_mypage)
+                    .build();
+            System.out.println("의료인");
+        }
+        else if (UserInfo.getInstance().getAuthority() == "근로자") {
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.bottom_nav_menu_worker);
+            appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_list, R.id.navigation_brain_checkup, R.id.navigation_teeth_checkup, R.id.navigation_mypage)
+                    .build();
+            System.out.println("근로자");
+        }
+        else {
+            navView.getMenu().clear();
+            navView.inflateMenu(R.menu.bottom_nav_menu_fam);
+            appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.navigation_list, R.id.navigation_mypage)
+                    .build();
+            System.out.println("보호자");
+        }
+
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
     private boolean checkPermissions()
     {
         for (String permission : REQUIRED_PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(this, permission)
-                    != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED)
                 return false;
-            }
         }
+
         return true;
     }
 
@@ -87,20 +107,13 @@ public class MainActivity extends AppCompatActivity
                     break;
                 }
             }
+
             if (allPermissionsGranted) {
                 // 모든 권한이 허용된 경우 앱 초기화 작업을 진행
-                //initializeApp();
-            } else {
+            }
+            else {
                 // 권한이 거부된 경우 사용자에게 앱의 기능에 대한 설명이나 추가적인 권한 요청을 할 수 있습니다.
             }
         }
     }
-
-    // 앱 초기화 작업
-    /*private void initializeApp()
-    {
-        // 권한이 허용된 경우에만 실행되는 초기화 작업을 진행
-        setContentView(R.layout.activity_main);
-        // 여기에 필요한 초기화 작업을 추가할 수 있습니다.
-    }*/
 }

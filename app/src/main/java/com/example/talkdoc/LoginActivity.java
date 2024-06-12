@@ -1,21 +1,17 @@
 package com.example.talkdoc;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.talkdoc.server.LoginTask;
-import com.example.talkdoc.server.SignUpTask;
 
 public class LoginActivity extends AppCompatActivity
 {
-
     private EditText editTextID, editTextPassword;
     private Button buttonLogin, buttonSignUp;
 
@@ -38,7 +34,7 @@ public class LoginActivity extends AppCompatActivity
                 String id = editTextID.getText().toString();
                 String password = editTextPassword.getText().toString();
 
-                new LoginTask(id, password).execute("http://14.63.125.208:7000/login");
+                new LoginTask(id, password).execute("http://14.63.125.208:7000/login"); //14.63.125.208:7000 192.168.221.249:5000
 
                 Intent intent = new Intent(LoginActivity.this, SplashActivity.class);
                 startActivity(intent);

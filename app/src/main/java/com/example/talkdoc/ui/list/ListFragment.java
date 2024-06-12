@@ -4,8 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.talkdoc.PatientInfo;
 import com.example.talkdoc.R;
-import com.example.talkdoc.SplashActivity;
 import com.example.talkdoc.TranslationActivity;
 import com.example.talkdoc.UserInfo;
 import com.example.talkdoc.databinding.FragmentListBinding;
@@ -37,11 +34,10 @@ public class ListFragment extends Fragment
     private FragmentListBinding binding;
     private CustomAdapter listViewAdapter;
     private ArrayList<PatientInfo> patientList;
+    private String patientName = null;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        System.out.println(UserInfo.getInstance().getPatientName());
-
         binding = FragmentListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -51,18 +47,14 @@ public class ListFragment extends Fragment
         listViewAdapter = new CustomAdapter(requireContext(), android.R.layout.simple_list_item_1, patientList);
         listView.setAdapter(listViewAdapter);
 
-        new GetPatientInfoTask(new GetPatientInfoTask.OnPatientInfoReceived()
-        {
-            @Override
-            public void onReceived(ArrayList<PatientInfo> updatedPatientList) {
-                patientList.clear();
-                patientList.addAll(updatedPatientList);
-                listViewAdapter.notifyDataSetChanged();
-            }
-        }).execute("http://14.63.125.208:7000/api/user");
+        if (UserInfo.getInstance().getAuthority().equals("보호자")) {
+            showInputDialog();
+        }
+        else {
+            loadPatientList(null);
+        }
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id)
             {
@@ -81,37 +73,64 @@ public class ListFragment extends Fragment
         return root;
     }
 
-    private void showInputDialog()
+    private void loadPatientList(String name)
     {
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        View dialogView = inflater.inflate(R.layout.dialog_input, null);
+        new GetPatientInfoTask(new GetPatientInfoTask.OnPatientInfoReceived() {
+            @Override
+            public void onReceived(ArrayList<PatientInfo> updatedPatientList)
+            {
+                patientList.clear();
+                patientList.addAll(updatedPatientList);
 
-        final EditText editTextInput = dialogView.findViewById(R.id.edit_text_input);
+                if (name != null)
+                    patientList.removeIf(m->m.getName().compareTo(name) != 0);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("환자 이름 입력")
-                .setView(dialogView)
-                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String inputName = editTextInput.getText().toString().trim();
-                        if (!inputName.isEmpty()) {
-                            UserInfo.getInstance().setPatientName(inputName);
-                        } else {
-                            Toast.makeText(getContext(), "이름을 입력하세요", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .show();
+                listViewAdapter.notifyDataSetChanged();
+            }
+        }).execute("http://14.63.125.208:7000/api/user");
     }
 
-    private PatientInfo searchPatientByName(String name) {
+    private void showInputDialog()
+    {
+        if (patientName == null) {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View dialogView = inflater.inflate(R.layout.dialog_input, null);
+
+            final EditText editTextInput = dialogView.findViewById(R.id.edit_text_input);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("환자 이름 입력")
+                    .setView(dialogView)
+                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            String inputName = editTextInput.getText().toString().trim();
+
+                            if (!inputName.isEmpty()) {
+                                patientName = inputName;
+                                loadPatientList(inputName);
+                            }
+                            else {
+                                Toast.makeText(getContext(), "이름을 입력하세요", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which)
+                        {
+                            dialog.cancel();
+                        }
+                    })
+                    .show();
+        }
+        else {
+            loadPatientList(patientName);
+        }
+    }
+
+    private PatientInfo searchPatientByName(String name)
+    {
         for (PatientInfo patient : patientList) {
             if (patient.getName().equalsIgnoreCase(name)) {
                 return patient;
@@ -125,12 +144,14 @@ public class ListFragment extends Fragment
     {
         private ArrayList<PatientInfo> items;
 
-        public CustomAdapter(Context context, int textViewResourceId, ArrayList<PatientInfo> objects) {
+        public CustomAdapter(Context context, int textViewResourceId, ArrayList<PatientInfo> objects)
+        {
             super(context, textViewResourceId, objects);
             this.items = objects;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
             View v = convertView;
 
             if (v == null) {
