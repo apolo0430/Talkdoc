@@ -150,7 +150,7 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
         birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
         phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
-        scoreText.setText("- 뇌질환 점수:\n" + selectedPatient.getScore());
+        scoreText.setText("- 뇌질환 점수:\n" + selectedPatient.getScore() + "점");
     }
 
     @Override

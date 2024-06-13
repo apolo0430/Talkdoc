@@ -37,6 +37,7 @@ public class PatientInfo implements Parcelable
         email = in.readString();
         birth = in.readString();
         phone = in.readString();
+        score = in.readString();
     }
 
     public String getName()
@@ -88,6 +89,7 @@ public class PatientInfo implements Parcelable
         dest.writeString(email);
         dest.writeString(birth);
         dest.writeString(phone);
+        dest.writeString(score);
     }
 
     @Override
