@@ -2,12 +2,10 @@ package com.example.talkdoc;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,9 +19,6 @@ import com.example.talkdoc.server.DoctorDataTask;
 import com.example.talkdoc.server.TranslateTask;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class TranslationActivity extends AppCompatActivity implements TranslateTask.TranslateTaskListener, DoctorDataTask.DoctorDataTaskListener
 {
@@ -53,7 +48,7 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
 
         // Setting the header view
         View headerView = navigationView.getHeaderView(0);
-        setInfoText(selectedPatient, headerView);
+        setInfoText(headerView);
 
         doctorText = headerView.findViewById(R.id.doctor);
 
@@ -97,7 +92,7 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
                         province = "2";
 
                     // 서버로 음성 파일 전송 및 번역 요청
-                    new TranslateTask(TranslationActivity.this).execute(audioFilePath, "http://14.63.125.208:7000", province);
+                    new TranslateTask(TranslationActivity.this).execute(audioFilePath, "http://14.63.125.208:7000", province, selectedPatient.getNumber());
                 }
             }
         });
@@ -133,7 +128,7 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         resultText.setText("번역 결과");
     }
 
-    private void setInfoText(PatientInfo selectedPatient, View headerView)
+    public void setInfoText(View headerView)
     {
         TextView nameText = headerView.findViewById(R.id.patient_name);
         TextView numText = headerView.findViewById(R.id.patient_number);

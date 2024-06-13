@@ -38,6 +38,7 @@ public class TranslateTask extends AsyncTask<String, Void, String>
         String audioFilePath = params[0];
         String serverUrl = params[1];
         String province = params[2];
+        String number = params[3];
 
         File audioFile = new File(audioFilePath);
         if (!audioFile.exists()) {
@@ -60,7 +61,7 @@ public class TranslateTask extends AsyncTask<String, Void, String>
                 .build();
 
         // 서버 URL과 province를 이용하여 전체 URL 생성
-        String url = serverUrl + "/translate_file/" + province;
+        String url = serverUrl + "/translate_file/" + province + "/" + number;
 
         // POST 요청 생성
         Request request = new Request.Builder()
