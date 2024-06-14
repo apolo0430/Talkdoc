@@ -60,7 +60,7 @@ public class TeethCheckupFragment extends Fragment
             imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
             // 서버로 이미지를 전송하고 결과를 받아오는 비동기 작업 실행
-            new GetTeethResultTask(resultTextView).execute(imageBitmap, "http://192.168.221.249:5000/predict");
+            new GetTeethResultTask(resultTextView).execute(imageBitmap, "http://192.168.221.22:5000/predict");
         }
     }
 

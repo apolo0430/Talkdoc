@@ -87,7 +87,7 @@ public class ListFragment extends Fragment
 
                 listViewAdapter.notifyDataSetChanged();
             }
-        }).execute("http://14.63.125.208:7000/api/user");
+        }).execute("http://192.168.221.44:5000/api/user");
     }
 
     private void showInputDialog()

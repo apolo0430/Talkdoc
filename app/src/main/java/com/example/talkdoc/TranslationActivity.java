@@ -2,6 +2,7 @@ package com.example.talkdoc;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.Sampler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
@@ -92,13 +93,13 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
                         province = "2";
 
                     // 서버로 음성 파일 전송 및 번역 요청
-                    new TranslateTask(TranslationActivity.this).execute(audioFilePath, "http://14.63.125.208:7000", province, selectedPatient.getNumber());
+                    new TranslateTask(TranslationActivity.this).execute(audioFilePath, "http://192.168.221.44:5000", province, selectedPatient.getNumber());
                 }
             }
         });
 
         // Doctor 데이터 요청
-        new DoctorDataTask(this).execute(selectedPatient.getNumber(), "http://14.63.125.208:7000");
+        new DoctorDataTask(this).execute(selectedPatient.getNumber(), "http://192.168.221.44:5000");
     }
 
     @Override
@@ -138,6 +139,8 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         TextView phoneText = headerView.findViewById(R.id.patient_phone);
         TextView scoreText = headerView.findViewById(R.id.brain_score);
 
+        float score = Float.valueOf(selectedPatient.getScore());
+
         // Basic
         nameText.setText(selectedPatient.getName());
         numText.setText("#" + selectedPatient.getNumber());
@@ -145,7 +148,7 @@ public class TranslationActivity extends AppCompatActivity implements TranslateT
         emailText.setText("- 이메일:\n" + selectedPatient.getEmail());
         birthText.setText("- 생년월일:\n" + selectedPatient.getBirth());
         phoneText.setText("- 전화번호:\n" + selectedPatient.getPhone());
-        scoreText.setText("- 뇌질환 점수:\n" + selectedPatient.getScore() + "점");
+        scoreText.setText("- 뇌질환 점수:\n" + String.format("%.1f", score) + "점");
     }
 
     @Override

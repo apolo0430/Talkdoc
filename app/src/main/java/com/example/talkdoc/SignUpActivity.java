@@ -59,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "모든 필드를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    new SignUpTask(name, id, password, userType_num).execute("http://14.63.125.208:7000/signup");
+                    new SignUpTask(name, id, password, userType_num).execute("http://192.168.221.44:5000/signup");
 
                     // 회원가입 완료 후 로그인 화면으로 이동
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);

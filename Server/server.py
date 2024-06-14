@@ -2,8 +2,8 @@ import os
 import base64
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
+from keras.models import load_model
+from keras.preprocessing import image
 import json
 import numpy as np
 import base64

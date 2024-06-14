@@ -75,8 +75,9 @@ public class GetTeethResultTask extends AsyncTask<Object, Void, String>
                 JSONObject jsonObject = new JSONObject(result);
                 double prediction = jsonObject.getDouble("prediction");
                 String predictionResult = jsonObject.getString("result");
+                double prob = 1.0 - Math.round(prediction * 1000) / 1000.0;
 
-                String message = "충치 확률: " + prediction + "\n결과: " + predictionResult;
+                String message = "충치 확률: " + prob + "%\n결과: " + predictionResult;
 
                 resultTextView.setText(message);
             }
